@@ -34,7 +34,7 @@ export default function Playground() {
   const [showMusicVisualizer, setShowMusicVisualizer] = useState(false);
   const [showLoveEffect, setShowLoveEffect] = useState(false);
   const [showPartyEffect, setShowPartyEffect] = useState(false);
-  const [showEasterEgg, setShowEasterEgg] = useState(false);
+  const [showEasterEgg] = useState(false);
   const terminalRef = useRef<HTMLDivElement>(null);
 
   // Game state

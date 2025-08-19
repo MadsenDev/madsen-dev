@@ -3,6 +3,7 @@ import "./globals.css";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import { LanguageProvider } from "@/contexts/LanguageContext";
+import { Suspense } from "react";
 
 export const metadata: Metadata = {
   title: "Christoffer Madsen - Full-Stack Developer & Problem Solver",
@@ -305,19 +306,21 @@ export default function RootLayout({
           </div>
         </div>
 
-        <LanguageProvider>
-          <SiteHeader />
-          <main>
-            {children}
-          </main>
-          <SiteFooter />
-        </LanguageProvider>
+                  <Suspense fallback={<div className="min-h-screen bg-slate-900 flex items-center justify-center text-white">Loading...</div>}>
+            <LanguageProvider>
+              <SiteHeader />
+              <main>
+                {children}
+              </main>
+              <SiteFooter />
+            </LanguageProvider>
+          </Suspense>
 
                  <script
            dangerouslySetInnerHTML={{
              __html: `
                          // Update loading text based on language preference
-          const userLang = navigator.language || navigator.userLanguage;
+          const userLang = navigator.language;
           const loadingText = document.getElementById('loading-text');
           if (loadingText) {
             if (userLang.startsWith('no')) {

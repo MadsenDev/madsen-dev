@@ -4,7 +4,7 @@ import { Github, Linkedin, Mail, Heart } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 
 export default function SiteFooter() {
-  const { t, translations } = useLanguage();
+  const { t } = useLanguage();
   const currentYear = new Date().getFullYear();
 
   return (

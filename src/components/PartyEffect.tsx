@@ -120,7 +120,7 @@ export default function PartyEffect({ isActive }: PartyEffectProps) {
       >
         <div className="text-8xl mb-6">🎉</div>
         <div className="text-white text-3xl font-bold mb-4">PARTY MODE!</div>
-        <div className="text-yellow-200 text-xl">Let's celebrate coding! 🎊</div>
+        <div className="text-yellow-200 text-xl">Let&apos;s celebrate coding! 🎊</div>
       </motion.div>
 
       {/* Fireworks */}

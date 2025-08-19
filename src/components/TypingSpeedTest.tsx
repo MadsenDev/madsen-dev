@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef } from 'react';
 import { motion } from 'motion/react';
 
 interface TypingStats {
@@ -29,6 +29,7 @@ export default function TypingSpeedTest({
   const [userInput, setUserInput] = useState('');
   const [startTime, setStartTime] = useState<number | null>(null);
   const [isComplete, setIsComplete] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [errors, setErrors] = useState(0);
   const inputRef = useRef<HTMLInputElement>(null);
 

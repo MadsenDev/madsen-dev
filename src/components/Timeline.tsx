@@ -3,7 +3,7 @@
 import { motion } from 'motion/react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useState } from 'react';
-import { Calendar, MapPin, Building, Code, Users, Zap } from 'lucide-react';
+import { Calendar, MapPin, Code, Users, Zap } from 'lucide-react';
 
 interface TimelineItem {
   id: string;

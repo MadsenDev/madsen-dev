@@ -1,10 +1,11 @@
 'use client';
 
+import { Suspense } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useSearchParams } from 'next/navigation';
 import { getLanguageUrl, getAvailableLanguages } from '@/lib/utils/language';
 
-export default function TestLanguagePage() {
+function TestLanguageContent() {
   const { language, setLanguage } = useLanguage();
   const searchParams = useSearchParams();
   const languages = getAvailableLanguages();
@@ -81,5 +82,13 @@ export default function TestLanguagePage() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function TestLanguagePage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-slate-900 text-white p-8 flex items-center justify-center">Loading...</div>}>
+      <TestLanguageContent />
+    </Suspense>
   );
 }

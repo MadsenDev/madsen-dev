@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Search, Command, X, ArrowUp, ArrowDown } from 'lucide-react';
+import { Search, Command, X, ArrowUp } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 
 interface CommandItem {

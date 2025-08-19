@@ -35,7 +35,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     
     // Finally, check browser language
     if (typeof window !== 'undefined') {
-      const browserLang = navigator.language || navigator.userLanguage;
+      const browserLang = navigator.language;
       if (browserLang.startsWith('no')) return 'no';
       if (browserLang.startsWith('es')) return 'es';
       if (browserLang.startsWith('fr')) return 'fr';
@@ -58,37 +58,25 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
         localStorage.setItem('preferred-language', urlLang);
       }
     }
-  }, [searchParams]); // Remove language from dependencies to prevent loops
+  }, [searchParams, language]); // Include language to properly track changes
 
   const t = (key: string): string => {
     const keys = key.split('.');
-    let value: any = translations;
+    let value: unknown = translations;
     
     for (const k of keys) {
       if (value && typeof value === 'object' && k in value) {
-        value = value[k];
+        value = (value as Record<string, unknown>)[k];
       } else {
-        // Fallback to English if translation not found
-        const englishTranslations = useTranslations('en');
-        value = getNestedValue(englishTranslations, keys);
-        break;
+        // Fallback to key if translation not found
+        return key;
       }
     }
     
     return typeof value === 'string' ? value : key;
   };
 
-  const getNestedValue = (obj: any, keys: string[]): any => {
-    let value = obj;
-    for (const key of keys) {
-      if (value && typeof value === 'object' && key in value) {
-        value = value[key];
-      } else {
-        return undefined;
-      }
-    }
-    return value;
-  };
+
 
   // Update URL and localStorage when language changes
   const updateLanguage = (newLanguage: Language) => {

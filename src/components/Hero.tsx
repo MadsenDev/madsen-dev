@@ -1,6 +1,6 @@
 'use client';
 
-import { motion, AnimatePresence } from 'motion/react';
+import { motion } from 'motion/react';
 import { ArrowDown, Github, Linkedin, Mail } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
@@ -97,7 +97,7 @@ export default function Hero() {
       }
     }, 3000);
     return () => clearInterval(interval);
-  }, [roles.length, isAnimating]);
+  }, [roles.length, isAnimating]); // Include isAnimating to properly track changes
 
   return (
     <section className="h-screen flex items-center justify-center relative overflow-hidden">

@@ -8,7 +8,7 @@ import LanguageSwitcher from './LanguageSwitcher';
 import { useLanguage } from '@/contexts/LanguageContext';
 
 export default function SiteHeader() {
-  const { t, translations } = useLanguage();
+  const { t } = useLanguage();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isCommandPaletteOpen, setIsCommandPaletteOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
