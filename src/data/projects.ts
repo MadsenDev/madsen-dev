@@ -17,8 +17,8 @@ export const projects: Project[] = [
     descriptionKey: 'projectDescriptions.gravstellerne',
     technologies: ['React', 'TypeScript', 'Node.js', 'Fastify', 'Prisma', 'MySQL', 'Firebase', 'Google Maps API', 'PWA', 'Vite', 'Tailwind CSS', 'Framer Motion', 'React Query', 'Zustand'],
     image: '/images/gravstellerne.png',
-    liveUrl: null,
-    githubUrl: null,
+    liveUrl: undefined,
+    githubUrl: undefined,
     featured: true,
     category: 'work'
   },
@@ -29,7 +29,7 @@ export const projects: Project[] = [
     technologies: ['Next.js', 'TypeScript', 'Tailwind CSS', 'Motion', 'Lucide React'],
     image: '/images/madsen-dev.png',
     liveUrl: 'https://madsens.dev',
-    githubUrl: 'https://github.com/madsens/madsens-dev',
+    githubUrl: 'https://github.com/MadsenDev/madsen-dev',
     featured: true,
     category: 'personal'
   },
@@ -39,8 +39,8 @@ export const projects: Project[] = [
     descriptionKey: 'projectDescriptions.supportTools',
     technologies: ['Electron', 'React', 'TypeScript', 'Vite', 'Node.js', 'System APIs', 'File System', 'Process Management'],
     image: '/images/support-cleaner.png',
-    liveUrl: null,
-    githubUrl: null,
+    liveUrl: undefined,
+    githubUrl: undefined,
     featured: false,
     category: 'work'
   },
@@ -63,7 +63,7 @@ export const projects: Project[] = [
     descriptionKey: 'projectDescriptions.elkjopReport',
     technologies: ['Electron', 'React', 'TypeScript', 'Vite', 'Material-UI', 'Chart.js', 'React PDF', 'Zustand', 'IndexedDB'],
     image: '/images/elkjop-report-app.png',
-    liveUrl: null,
+    liveUrl: undefined,
     githubUrl: 'https://github.com/MadsenDev/elkjop-report-app',
     featured: false,
     category: 'personal'
@@ -74,7 +74,7 @@ export const projects: Project[] = [
     descriptionKey: 'projectDescriptions.dreamPixel',
     technologies: ['React', 'Vite', 'Tailwind CSS', 'PNG.js', 'React Icons'],
     image: '/images/dream-pixel.png',
-    liveUrl: null,
+    liveUrl: undefined,
     githubUrl: 'https://github.com/MadsenDev/dream-pixel-editor',
     featured: false,
     category: 'personal'
@@ -85,8 +85,8 @@ export const projects: Project[] = [
     descriptionKey: 'projectDescriptions.secretInformant',
     technologies: ['React', 'Vite', 'Tailwind CSS', 'Framer Motion', 'Node.js', 'Express', 'Twilio', 'Rate Limiting', 'TypeScript'],
     image: '/images/secret-informant.png',
-    liveUrl: null,
-    githubUrl: null,
+    liveUrl: undefined,
+    githubUrl: undefined,
     featured: false,
     category: 'personal'
   },
@@ -96,8 +96,8 @@ export const projects: Project[] = [
     descriptionKey: 'projectDescriptions.knowledgeBase',
     technologies: ['React 19', 'Vite', 'Node.js', 'Express', 'MySQL', 'Sequelize', 'Socket.IO', 'OpenAI API', 'JWT', 'PDFKit', 'Sharp', 'Tailwind CSS', 'Framer Motion', 'TypeScript'],
     image: '/images/knowledge-base.png',
-    liveUrl: null,
-    githubUrl: null,
+    liveUrl: undefined,
+    githubUrl: undefined,
     featured: false,
     category: 'personal'
   }
