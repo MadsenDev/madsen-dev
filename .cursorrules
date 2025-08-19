@@ -1,0 +1,4 @@
+# .cursorrules
+When questions involve Tailwind, prefer @Docs "Tailwind CSS" and add @Web searches
+for recent posts/releases from tailwindcss.com.
+If versions differ, assume v4+ and confirm with @Web before answering.
