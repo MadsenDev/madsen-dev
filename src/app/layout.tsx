@@ -89,6 +89,51 @@ export default function RootLayout({
               setTimeout(() => {
                 window.scrollTo(0, 0);
               }, 200);
+              
+              // Additional scroll prevention for first-time visitors
+              setTimeout(() => {
+                window.scrollTo(0, 0);
+              }, 500);
+              
+              setTimeout(() => {
+                window.scrollTo(0, 0);
+              }, 1000);
+              
+              // Prevent any hash-based scrolling
+              if (window.location.hash) {
+                history.replaceState(null, null, window.location.pathname + window.location.search);
+                window.scrollTo(0, 0);
+              }
+              
+              // Global scroll prevention for first-time visitors
+              let scrollPreventionCount = 0;
+              const maxScrollPreventions = 10;
+              
+              function preventScroll() {
+                if (scrollPreventionCount < maxScrollPreventions) {
+                  window.scrollTo(0, 0);
+                  scrollPreventionCount++;
+                }
+              }
+              
+              // Set up multiple scroll prevention intervals
+              const scrollIntervals = [100, 200, 500, 1000, 1500, 2000, 2500, 3000];
+              scrollIntervals.forEach(delay => {
+                setTimeout(preventScroll, delay);
+              });
+              
+              // Also prevent scroll on any scroll events for the first few seconds
+              let scrollEventPrevention = true;
+              window.addEventListener('scroll', () => {
+                if (scrollEventPrevention) {
+                  window.scrollTo(0, 0);
+                }
+              });
+              
+              // Stop preventing scroll events after 5 seconds
+              setTimeout(() => {
+                scrollEventPrevention = false;
+              }, 5000);
             `,
           }}
         />
@@ -316,41 +361,47 @@ export default function RootLayout({
             </LanguageProvider>
           </Suspense>
 
-                 <script
-           dangerouslySetInnerHTML={{
-             __html: `
-                         // Update loading text based on language preference
-          const userLang = navigator.language;
-          const loadingText = document.getElementById('loading-text');
-          if (loadingText) {
-            if (userLang.startsWith('no')) {
-              loadingText.textContent = 'Laster...';
-            } else if (userLang.startsWith('es')) {
-              loadingText.textContent = 'Cargando...';
-            } else if (userLang.startsWith('fr')) {
-              loadingText.textContent = 'Chargement...';
-            } else if (userLang.startsWith('de')) {
-              loadingText.textContent = 'Laden...';
-            } else {
-              loadingText.textContent = 'Loading...';
-            }
-          }
-               
-               // Hide the initial loading screen after React loads
-               window.addEventListener('load', () => {
-                 setTimeout(() => {
-                   const loading = document.getElementById('initial-loading');
-                   if (loading) {
-                     loading.classList.add('hidden');
-                     setTimeout(() => {
-                       loading.remove();
-                     }, 500);
-                   }
-                 }, 1500);
-               });
-             `,
-           }}
-         />
+                           <script
+            dangerouslySetInnerHTML={{
+              __html: `
+                // Update loading text based on language preference
+                const userLang = navigator.language;
+                const loadingText = document.getElementById('loading-text');
+                if (loadingText) {
+                  if (userLang.startsWith('no')) {
+                    loadingText.textContent = 'Laster...';
+                  } else if (userLang.startsWith('es')) {
+                    loadingText.textContent = 'Cargando...';
+                  } else if (userLang.startsWith('fr')) {
+                    loadingText.textContent = 'Chargement...';
+                  } else if (userLang.startsWith('de')) {
+                    loadingText.textContent = 'Laden...';
+                  } else {
+                    loadingText.textContent = 'Loading...';
+                  }
+                }
+                
+                // Hide the initial loading screen after React loads
+                window.addEventListener('load', () => {
+                  setTimeout(() => {
+                    const loading = document.getElementById('initial-loading');
+                    if (loading) {
+                      loading.classList.add('hidden');
+                      setTimeout(() => {
+                        loading.remove();
+                        // Force scroll to top after loading screen is removed
+                        window.scrollTo(0, 0);
+                        // Additional scroll prevention
+                        setTimeout(() => window.scrollTo(0, 0), 100);
+                        setTimeout(() => window.scrollTo(0, 0), 500);
+                        setTimeout(() => window.scrollTo(0, 0), 1000);
+                      }, 500);
+                    }
+                  }, 1500);
+                });
+              `,
+            }}
+          />
       </body>
     </html>
   );

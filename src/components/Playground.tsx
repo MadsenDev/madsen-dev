@@ -64,9 +64,9 @@ export default function Playground() {
     "First, solve the problem. Then, write the code."
   ];
 
-  // Auto-scroll terminal to bottom
+  // Auto-scroll terminal to bottom (but not on initial render)
   useEffect(() => {
-    if (terminalRef.current) {
+    if (terminalRef.current && consoleHistory.length > 0) {
       terminalRef.current.scrollTop = terminalRef.current.scrollHeight;
     }
   }, [consoleHistory]);
