@@ -8,6 +8,7 @@ import Playground from '@/components/Playground';
 import AnimatedAbout from '@/components/AnimatedAbout';
 import AnimatedContact from '@/components/AnimatedContact';
 import { projects } from '@/data/projects';
+import TvashtarSection from '@/components/TvashtarSection';
 
 export default function TranslatedSections() {
   const { t } = useLanguage();
@@ -26,6 +27,10 @@ export default function TranslatedSections() {
         {/* Timeline */}
         <Timeline />
       </Section>
+
+      <div id="tvashtar">
+        <TvashtarSection />
+      </div>
 
       {/* Projects Section */}
       <Section
