@@ -91,7 +91,7 @@ export default function SiteHeader() {
       <motion.header
         initial={{ y: -100 }}
         animate={{ y: 0 }}
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+        className={`fixed top-0 left-0 right-0 z-[2000] transition-all duration-500 ${
           isScrolled 
             ? 'bg-slate-900/95 backdrop-blur-xl border-b border-slate-700/50 shadow-2xl' 
             : 'bg-gradient-to-b from-slate-900/80 via-slate-900/40 to-transparent backdrop-blur-sm'
