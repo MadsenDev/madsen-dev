@@ -220,7 +220,7 @@ export const en = {
     elkjøp: {
       title: 'Various Positions',
       company: 'Elkjøp Halden',
-      period: '2018 - 2023',
+      period: '2018 - Present',
       description: 'Customer support and technical assistance',
       skills: 'Customer Support, Technical Troubleshooting, Problem Solving',
     },
