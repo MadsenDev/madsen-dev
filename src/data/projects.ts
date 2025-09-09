@@ -74,7 +74,7 @@ export const projects: Project[] = [
     descriptionKey: 'projectDescriptions.dreamPixel',
     technologies: ['React', 'Vite', 'Tailwind CSS', 'PNG.js', 'React Icons'],
     image: '/images/dream-pixel.png',
-    liveUrl: undefined,
+    liveUrl: 'https://dream.madsens.dev',
     githubUrl: 'https://github.com/MadsenDev/dream-pixel-editor',
     featured: false,
     category: 'personal'
