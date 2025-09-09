@@ -1,8 +1,13 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import Image from "next/image";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
+import MobileNavigation from "@/components/MobileNavigation";
+import { AnalyticsConsent } from "@/components/AnalyticsConsent";
 import { LanguageProvider } from "@/contexts/LanguageContext";
+import { ThemeProvider } from "@/contexts/ThemeContext";
+import { TerminalThemeProvider } from "@/contexts/TerminalThemeContext";
 import { Suspense } from "react";
 
 export const metadata: Metadata = {
@@ -27,11 +32,35 @@ export const metadata: Metadata = {
     description: "Full-stack developer specializing in React, Next.js, and modern web technologies. Creating custom solutions and tools.",
     type: "website",
     url: "https://madsens.dev",
+    siteName: "Madsen Development",
+    images: [
+      {
+        url: "https://madsens.dev/images/madsen-dev.png",
+        width: 1200,
+        height: 630,
+        alt: "Christoffer Madsen - Full-Stack Developer Portfolio",
+      },
+    ],
+    locale: "en_US",
+    alternateLocale: ["nb_NO", "es_ES", "fr_FR", "de_DE"],
   },
   twitter: {
     card: "summary_large_image",
     title: "Christoffer Madsen - Full-Stack Developer",
     description: "Full-stack developer specializing in React, Next.js, and modern web technologies.",
+    images: ["https://madsens.dev/images/madsen-dev.png"],
+    creator: "@MadsenDev",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
   },
 };
 
@@ -55,10 +84,55 @@ export default function RootLayout({
         <link rel="alternate" hrefLang="fr-FR" href="https://madsens.dev?lang=fr" />
         <link rel="alternate" hrefLang="de-DE" href="https://madsens.dev?lang=de" />
         <link rel="alternate" hrefLang="x-default" href="https://madsens.dev" />
+        
+        {/* Structured Data (JSON-LD) */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Person",
+              "name": "Christoffer Madsen",
+              "jobTitle": "Full-Stack Developer",
+              "description": "Full-stack developer specializing in React, Next.js, and modern web technologies. From tech support at Elkjøp to building applications at Gravstellerne, now freelancing to create custom solutions.",
+              "url": "https://madsens.dev",
+              "image": "https://madsens.dev/images/madsen-dev.png",
+              "sameAs": [
+                "https://github.com/MadsenDev",
+                "https://www.linkedin.com/in/madsendev/"
+              ],
+              "worksFor": [
+                {
+                  "@type": "Organization",
+                  "name": "Gravstellerne AS",
+                  "url": "https://gravstellerne.no"
+                },
+                {
+                  "@type": "Organization", 
+                  "name": "Elkjøp Halden"
+                }
+              ],
+              "alumniOf": "Elkjøp Halden",
+              "knowsAbout": [
+                "React",
+                "Next.js", 
+                "TypeScript",
+                "Node.js",
+                "Web Development",
+                "Full-Stack Development"
+              ],
+              "address": {
+                "@type": "PostalAddress",
+                "addressCountry": "NO"
+              }
+            })
+          }}
+        />
+        
         <script
           dangerouslySetInnerHTML={{
             __html: `
-              // Prevent scroll restoration and force top position
+              // Prevent scroll restoration
               if (history.scrollRestoration) {
                 history.scrollRestoration = 'manual';
               }
@@ -68,72 +142,18 @@ export default function RootLayout({
                 history.replaceState(null, null, window.location.pathname + window.location.search);
               }
               
-              // Force scroll to top immediately
+              // Force scroll to top immediately and on load
               window.scrollTo(0, 0);
               
-              // Prevent any automatic scrolling on load
+              // Ensure scroll to top after page loads
               window.addEventListener('load', () => {
                 window.scrollTo(0, 0);
               });
               
-              // Prevent any automatic scrolling on DOMContentLoaded
+              // One additional check after DOM is ready
               document.addEventListener('DOMContentLoaded', () => {
                 window.scrollTo(0, 0);
               });
-              
-              // Also force scroll to top after a short delay to catch any late scrolls
-              setTimeout(() => {
-                window.scrollTo(0, 0);
-              }, 50);
-              
-              setTimeout(() => {
-                window.scrollTo(0, 0);
-              }, 200);
-              
-              // Additional scroll prevention for first-time visitors
-              setTimeout(() => {
-                window.scrollTo(0, 0);
-              }, 500);
-              
-              setTimeout(() => {
-                window.scrollTo(0, 0);
-              }, 1000);
-              
-              // Prevent any hash-based scrolling
-              if (window.location.hash) {
-                history.replaceState(null, null, window.location.pathname + window.location.search);
-                window.scrollTo(0, 0);
-              }
-              
-              // Global scroll prevention for first-time visitors
-              let scrollPreventionCount = 0;
-              const maxScrollPreventions = 10;
-              
-              function preventScroll() {
-                if (scrollPreventionCount < maxScrollPreventions) {
-                  window.scrollTo(0, 0);
-                  scrollPreventionCount++;
-                }
-              }
-              
-              // Set up multiple scroll prevention intervals
-              const scrollIntervals = [100, 200, 500, 1000, 1500, 2000, 2500, 3000];
-              scrollIntervals.forEach(delay => {
-                setTimeout(preventScroll, delay);
-              });
-              
-              // Also prevent scroll on any scroll events for the first few seconds
-              let scrollEventPrevention = true;
-              window.addEventListener('scroll', () => {
-                if (scrollEventPrevention) {
-                  window.scrollTo(0, 0);
-                }
-              });
-              
-              // Stop preventing scroll events after 5 seconds
-              setTimeout(() => {
-                scrollEventPrevention = false;
-              }, 5000);
             `,
           }}
         />
@@ -334,9 +354,12 @@ export default function RootLayout({
         <div id="initial-loading">
           <div className="loading-content">
             <div className="loading-logo">
-              <img 
+              <Image 
                 src="/images/logo.svg" 
                 alt="Madsen Development Logo" 
+                width={80}
+                height={80}
+                priority
                 style={{ width: '100%', height: '100%', objectFit: 'contain' }}
               />
             </div>
@@ -352,13 +375,19 @@ export default function RootLayout({
         </div>
 
                   <Suspense fallback={<div className="min-h-screen bg-slate-900 flex items-center justify-center text-white">Loading...</div>}>
-            <LanguageProvider>
-              <SiteHeader />
-              <main>
-                {children}
-              </main>
-              <SiteFooter />
-            </LanguageProvider>
+            <ThemeProvider>
+              <TerminalThemeProvider>
+                <LanguageProvider>
+                  <SiteHeader />
+                  <main id="main-content" tabIndex={-1}>
+                    {children}
+                  </main>
+                  <SiteFooter />
+                  <MobileNavigation />
+                  <AnalyticsConsent />
+                </LanguageProvider>
+              </TerminalThemeProvider>
+            </ThemeProvider>
           </Suspense>
 
                            <script
@@ -389,12 +418,8 @@ export default function RootLayout({
                       loading.classList.add('hidden');
                       setTimeout(() => {
                         loading.remove();
-                        // Force scroll to top after loading screen is removed
+                        // Ensure scroll stays at top after loading screen is removed
                         window.scrollTo(0, 0);
-                        // Additional scroll prevention
-                        setTimeout(() => window.scrollTo(0, 0), 100);
-                        setTimeout(() => window.scrollTo(0, 0), 500);
-                        setTimeout(() => window.scrollTo(0, 0), 1000);
                       }, 500);
                     }
                   }, 1500);

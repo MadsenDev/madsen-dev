@@ -3,11 +3,14 @@
 import { useMemo } from 'react';
 import { motion } from 'motion/react';
 import { Mail, Beaker, Shield, Activity } from 'lucide-react';
+import { useLanguage } from '@/contexts/LanguageContext';
+import Image from 'next/image';
 
 const logoSrc = '/images/tvashtar-logo.svg';
 const bannerSrc = '/images/tvashtar-banner.png';
 
 export default function TvashtarSection() {
+  const { t } = useLanguage();
   // subtle randomized Ken Burns path so it feels alive
   const kb = useMemo(() => {
     const x = Math.random() > 0.5 ? [0, 2, 0] : [0, -2, 0];
@@ -27,7 +30,7 @@ export default function TvashtarSection() {
   ].join('');
 
   return (
-    <section id="tvashtar" className="relative overflow-hidden">
+    <section id="tvashtar" className="relative overflow-hidden min-h-[100svh] w-full">
       {/* Tvashtar background */}
       <div className="absolute inset-0 bg-[#0b0f1a]" />
       <div className="absolute inset-0 pointer-events-none">
@@ -46,59 +49,57 @@ export default function TvashtarSection() {
         <div className="absolute inset-0 opacity-[0.06] bg-[linear-gradient(rgba(255,255,255,0.12)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.12)_1px,transparent_1px)] bg-[size:44px_44px]" />
       </div>
 
-      <div className="relative mx-auto max-w-7xl px-6 lg:px-8 py-20 md:py-28">
-        <div className="grid items-center gap-10 lg:gap-16 md:grid-cols-2">
+      <div className="relative mx-auto max-w-7xl px-6 lg:px-8 min-h-[100svh] flex items-center">
+        <div className="grid items-center gap-12 lg:gap-20 md:grid-cols-2 w-full">
           {/* Left: brand + copy + single CTA */}
           <motion.div
             initial={{ opacity: 0, y: 18 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.25 }}
             transition={{ duration: 0.6, ease: 'easeOut' }}
-            className="space-y-7"
+            className="space-y-8"
           >
             <div className="flex items-center gap-3">
               <div className="grid size-11 place-items-center rounded-xl bg-white/5 ring-1 ring-white/10 overflow-hidden">
-                <img src={logoSrc} alt="Tvashtar Editor" className="w-7 h-7 object-contain" />
+                <Image src={logoSrc} alt={t('tvashtar.title')} width={28} height={28} className="w-7 h-7 object-contain" />
               </div>
-              <div className="flex items-center flex-wrap gap-2">
-                <h2 className="text-2xl md:text-3xl font-bold text-white">Tvashtar Editor</h2>
+              <div className="flex items-center flex-wrap gap-3">
+                <h2 className="text-3xl md:text-5xl font-bold tracking-tight text-white">Tvashtar Studio</h2>
                 <span className="inline-flex items-center gap-1 rounded-full bg-amber-500/15 text-amber-300 px-2.5 py-1 text-[11px] font-semibold ring-1 ring-amber-400/30">
-                  <Beaker size={14} /> Beta
+                  <Beaker size={14} /> {t('tvashtar.beta')}
                 </span>
                 <span className="inline-flex items-center gap-1 rounded-full bg-white/5 text-white/70 px-2.5 py-1 text-[11px] ring-1 ring-white/10">
-                  <Shield size={14} /> License-gated
+                  <Shield size={14} /> {t('tvashtar.licenseGated')}
                 </span>
               </div>
             </div>
 
-            <p className="text-sm md:text-base text-white/75 leading-relaxed max-w-prose">
-              A focused editor for building React + Tailwind UIs with a live canvas, device previews,
-              and pluggable libraries. The beta is invite-only so I can keep feedback loops tight and
-              ship fast. If it fits your workflow, I’ll mint you a license and get you set up.
+            <p className="text-base md:text-xl text-white/80 leading-relaxed max-w-2xl">
+              {t('tvashtar.description')}
             </p>
 
             {/* Two quick columns that set expectations */}
-            <div className="grid sm:grid-cols-2 gap-3">
-              <div className="rounded-xl border border-white/10 bg-white/5 p-4">
-                <div className="flex items-center gap-2 text-white/80 text-sm font-medium mb-2">
-                  <Activity size={16} /> What you’ll test
+            <div className="grid sm:grid-cols-2 gap-4">
+              <div className="rounded-xl border border-white/10 bg-white/5 p-5">
+                <div className="flex items-center gap-2 text-white/90 text-sm font-medium mb-2">
+                  <Activity size={16} /> {t('tvashtar.test.title')}
                 </div>
-                <ul className="space-y-1.5 text-sm text-white/75">
-                  <li className="flex gap-2"><span className="mt-1 size-1.5 rounded-full bg-cyan-400" /> Canvas editing flow</li>
-                  <li className="flex gap-2"><span className="mt-1 size-1.5 rounded-full bg-indigo-400" /> Presets & snippets</li>
-                  <li className="flex gap-2"><span className="mt-1 size-1.5 rounded-full bg-pink-400" /> Library toggles</li>
-                  <li className="flex gap-2"><span className="mt-1 size-1.5 rounded-full bg-emerald-400" /> Save/open .tsc</li>
+                <ul className="space-y-2 text-sm text-white/80">
+                  <li className="flex gap-2"><span className="mt-1 size-1.5 rounded-full bg-cyan-400" /> {t('tvashtar.test.canvas')}</li>
+                  <li className="flex gap-2"><span className="mt-1 size-1.5 rounded-full bg-indigo-400" /> {t('tvashtar.test.presets')}</li>
+                  <li className="flex gap-2"><span className="mt-1 size-1.5 rounded-full bg-pink-400" /> {t('tvashtar.test.toggles')}</li>
+                  <li className="flex gap-2"><span className="mt-1 size-1.5 rounded-full bg-emerald-400" /> {t('tvashtar.test.save')}</li>
                 </ul>
               </div>
-              <div className="rounded-xl border border-white/10 bg-white/5 p-4">
-                <div className="flex items-center gap-2 text-white/80 text-sm font-medium mb-2">
-                  <Shield size={16} /> What I need
+              <div className="rounded-xl border border-white/10 bg-white/5 p-5">
+                <div className="flex items-center gap-2 text-white/90 text-sm font-medium mb-2">
+                  <Shield size={16} /> {t('tvashtar.need.title')}
                 </div>
-                <ul className="space-y-1.5 text-sm text-white/75">
-                  <li className="flex gap-2"><span className="mt-1 size-1.5 rounded-full bg-cyan-400" /> Short feedback notes</li>
-                  <li className="flex gap-2"><span className="mt-1 size-1.5 rounded-full bg-indigo-400" /> Repro steps if bugs</li>
-                  <li className="flex gap-2"><span className="mt-1 size-1.5 rounded-full bg-pink-400" /> Your platform + version</li>
-                  <li className="flex gap-2"><span className="mt-1 size-1.5 rounded-full bg-amber-400" /> A few sample projects</li>
+                <ul className="space-y-2 text-sm text-white/80">
+                  <li className="flex gap-2"><span className="mt-1 size-1.5 rounded-full bg-cyan-400" /> {t('tvashtar.need.feedback')}</li>
+                  <li className="flex gap-2"><span className="mt-1 size-1.5 rounded-full bg-indigo-400" /> {t('tvashtar.need.repro')}</li>
+                  <li className="flex gap-2"><span className="mt-1 size-1.5 rounded-full bg-pink-400" /> {t('tvashtar.need.platform')}</li>
+                  <li className="flex gap-2"><span className="mt-1 size-1.5 rounded-full bg-amber-400" /> {t('tvashtar.need.samples')}</li>
                 </ul>
               </div>
             </div>
@@ -107,16 +108,16 @@ export default function TvashtarSection() {
             <div className="pt-1">
               <a
                 href={mailto}
-                className="group inline-flex items-center justify-center gap-2 rounded-xl px-5 py-3 text-sm font-semibold text-white
+                className="group inline-flex items-center justify-center gap-2 rounded-xl px-6 py-3.5 text-base font-semibold text-white
                            bg-gradient-to-r from-cyan-500 via-indigo-500 to-pink-500
                            hover:from-cyan-400 hover:via-indigo-400 hover:to-pink-400
                            shadow-lg shadow-indigo-900/25"
               >
                 <Mail size={18} />
-                Request Beta Access
+                {t('tvashtar.cta')}
               </a>
               <p className="mt-2 text-xs text-white/55">
-                No public downloads. Licenses are issued manually during beta.
+                {t('tvashtar.disclaimer')}
               </p>
             </div>
           </motion.div>
@@ -138,16 +139,16 @@ export default function TvashtarSection() {
                   <span className="size-2.5 rounded-full bg-emerald-400/80" />
                 </div>
                 <div className="ml-2 flex items-center gap-2 text-xs text-white/70">
-                  <img src={logoSrc} alt="logo" className="w-3.5 h-3.5 object-contain" />
+                  <Image src={logoSrc} alt="logo" width={14} height={14} className="w-3.5 h-3.5 object-contain" />
                   <span className="font-medium">Tvashtar Editor</span>
                   <span className="mx-1 text-white/20">•</span>
-                  <span className="text-white/50">Invite-only Beta</span>
+                  <span className="text-white/50">{t('tvashtar.titlebar.inviteOnly')}</span>
                 </div>
               </div>
 
               {/* Canvas */}
               <motion.div
-                className="relative aspect-[16/10] overflow-hidden will-change-transform"
+                className="relative overflow-hidden will-change-transform h-[58svh] md:h-[64svh]"
                 style={{ transformStyle: 'preserve-3d' }}
                 whileHover={{ rotateX: -2, rotateY: 3, scale: 1.01 }}
                 transition={{ type: 'spring', stiffness: 120, damping: 14 }}

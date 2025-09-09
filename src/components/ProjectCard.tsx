@@ -2,6 +2,7 @@
 
 import { motion } from 'motion/react';
 import { ExternalLink, Github, Calendar, Code } from 'lucide-react';
+import Image from 'next/image';
 import { useLanguage } from '@/contexts/LanguageContext';
 
 interface ProjectCardProps {
@@ -51,10 +52,12 @@ export default function ProjectCard({
     >
       {/* Background Image */}
       <div className="absolute inset-0">
-        <img
+        <Image
           src={image || '/images/no_image.png'}
           alt={title}
-          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+          fill
+          className="object-cover group-hover:scale-105 transition-transform duration-500"
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         />
         {/* Gradient Overlay */}
         <div className="absolute inset-0 bg-gradient-to-t from-slate-900/95 via-slate-900/60 to-slate-900/20" />

@@ -38,6 +38,7 @@ export const fr = {
     viewCode: 'Code',
     moreTechnologies: 'plus',
     categories: {
+      all: 'Tous',
       work: 'Travail',
       personal: 'Personnel',
       freelance: 'Freelance',
@@ -83,6 +84,19 @@ export const fr = {
     emailMe: 'M\'Envoyer un Email',
     availableFor: 'Disponible pour du travail freelance',
     openTo: 'Ouvert aux nouvelles opportunités',
+    letsWorkTogether: 'Travaillons ensemble',
+    labels: {
+      email: 'Email',
+      location: 'Localisation',
+      responseTime: 'Temps de réponse',
+      usuallyWithin: 'Généralement sous 24 heures'
+    },
+    outOfOrder: {
+      title: 'Formulaire de contact temporairement indisponible',
+      description: 'Nous effectuons une maintenance. En attendant, contactez‑moi par email et je vous répondrai rapidement.',
+      mailCta: 'M’écrire',
+      replySLA: 'Répond généralement sous 24 heures'
+    }
   },
   
   footer: {
@@ -212,6 +226,50 @@ export const fr = {
     indexeddb: 'IndexedDB',
     zustand: 'Gestion d\'État Zustand',
     apiDevelopment: 'Développement d\'API',
+  },
+
+  skillsViz: {
+    header: {
+      title: 'Compétences Techniques',
+      subtitle: 'Un aperçu de mes compétences techniques à travers différents domaines'
+    },
+    modes: {
+      categories: 'Catégories',
+      bars: 'Barres de progression',
+      radar: 'Diagramme radar'
+    },
+    stats: {
+      total: 'Compétences totales',
+      advanced: 'Avancé (90%+)',
+      proficient: 'Compétent (80%+)',
+      learning: 'En apprentissage'
+    }
+  },
+
+  tvashtar: {
+    title: 'Tvashtar Editor',
+    beta: 'Beta',
+    licenseGated: 'Sous licence',
+    description: 'Un éditeur focalisé pour construire des interfaces React + Tailwind avec un canvas en direct, des aperçus d’appareils et des bibliothèques extensibles. La bêta est sur invitation pour garder des boucles de feedback courtes et livrer rapidement. Si cela correspond à votre flux, je vous délivrerai une licence et vous mettrai en place.',
+    test: {
+      title: 'Ce que vous testerez',
+      canvas: 'Flux d’édition sur canvas',
+      presets: 'Presets & snippets',
+      toggles: 'Bascule des bibliothèques',
+      save: 'Enregistrer/ouvrir .tvs'
+    },
+    need: {
+      title: 'Ce dont j’ai besoin',
+      feedback: 'Courtes notes de feedback',
+      repro: 'Étapes de repro si bugs',
+      platform: 'Votre plateforme + version',
+      samples: 'Quelques projets exemples'
+    },
+    cta: 'Demander un accès Beta',
+    disclaimer: 'Pas de téléchargements publics. Licences émises manuellement durant la bêta.',
+    titlebar: {
+      inviteOnly: 'Bêta sur invitation'
+    }
   },
   
   // Timeline

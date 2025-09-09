@@ -3,12 +3,16 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
 import { Menu, X, Command, Github, Linkedin, Mail } from 'lucide-react';
+import Image from 'next/image';
 import CommandPalette from './CommandPalette';
 import LanguageSwitcher from './LanguageSwitcher';
+import ThemeToggle from './ThemeToggle';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { useAnalytics } from '@/hooks/useAnalytics';
 
 export default function SiteHeader() {
   const { t } = useLanguage();
+  const { trackInteraction } = useAnalytics();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isCommandPaletteOpen, setIsCommandPaletteOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -77,6 +81,7 @@ export default function SiteHeader() {
     { href: '#home', label: t('nav.home') },
     { href: '#about', label: t('nav.about') },
     { href: '#projects', label: t('nav.projects') },
+    { href: '#blog', label: 'Blog' },
     { href: '#playground', label: t('nav.playground') },
     { href: '#contact', label: t('nav.contact') }
   ];
@@ -102,9 +107,12 @@ export default function SiteHeader() {
               transition={{ type: "spring", stiffness: 400, damping: 10 }}
             >
               <div className="w-8 h-8 flex items-center justify-center">
-                <img 
+                <Image 
                   src="/images/logo.svg" 
                   alt="Christoffer Madsen Logo" 
+                  width={32}
+                  height={32}
+                  priority
                   className="w-full h-full object-contain transition-all duration-300"
                 />
               </div>
@@ -135,7 +143,10 @@ export default function SiteHeader() {
             <div className="hidden lg:flex items-center space-x-3">
               {/* Command Palette Button */}
               <motion.button
-                onClick={() => setIsCommandPaletteOpen(true)}
+                onClick={() => {
+                  setIsCommandPaletteOpen(true);
+                  trackInteraction('navigation', 'command_palette_open');
+                }}
                 className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-300 hover:text-white transition-all duration-300 border border-slate-600/50 rounded-lg hover:border-purple-500/50 hover:bg-purple-500/10 backdrop-blur-sm"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
@@ -146,6 +157,9 @@ export default function SiteHeader() {
               
               {/* Language Switcher */}
               <LanguageSwitcher />
+              
+              {/* Theme Toggle */}
+              <ThemeToggle />
               
               {/* Social Links */}
               <div className="flex items-center space-x-2 ml-2">

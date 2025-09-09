@@ -38,6 +38,7 @@ export const en = {
     viewCode: 'Code',
     moreTechnologies: 'more',
     categories: {
+      all: 'All',
       work: 'Work',
       personal: 'Personal',
       freelance: 'Freelance',
@@ -83,6 +84,19 @@ export const en = {
     emailMe: 'Email Me',
     availableFor: 'Available for freelance work',
     openTo: 'Open to new opportunities',
+    letsWorkTogether: "Let's Work Together",
+    labels: {
+      email: 'Email',
+      location: 'Location',
+      responseTime: 'Response Time',
+      usuallyWithin: 'Usually within 24 hours'
+    },
+    outOfOrder: {
+      title: 'Contact form temporarily unavailable',
+      description: "We're doing some maintenance. In the meantime, please reach out via email and I'll respond shortly.",
+      mailCta: 'Email me',
+      replySLA: 'Usually replies within 24 hours'
+    }
   },
   
   footer: {
@@ -212,6 +226,50 @@ export const en = {
     indexeddb: 'IndexedDB',
     zustand: 'Zustand State Management',
     apiDevelopment: 'API Development',
+  },
+
+  skillsViz: {
+    header: {
+      title: 'Technical Skills',
+      subtitle: 'A comprehensive overview of my technical abilities across different domains'
+    },
+    modes: {
+      categories: 'Categories',
+      bars: 'Progress Bars',
+      radar: 'Radar Chart'
+    },
+    stats: {
+      total: 'Total Skills',
+      advanced: 'Advanced (90%+)',
+      proficient: 'Proficient (80%+)',
+      learning: 'Learning'
+    }
+  },
+
+  tvashtar: {
+    title: 'Tvashtar Editor',
+    beta: 'Beta',
+    licenseGated: 'License-gated',
+    description: 'A focused editor for building React + Tailwind UIs with a live canvas, device previews, and pluggable libraries. The beta is invite-only so I can keep feedback loops tight and ship fast. If it fits your workflow, I’ll mint you a license and get you set up.',
+    test: {
+      title: 'What you’ll test',
+      canvas: 'Canvas editing flow',
+      presets: 'Presets & snippets',
+      toggles: 'Library toggles',
+      save: 'Save/open .tvs'
+    },
+    need: {
+      title: 'What I need',
+      feedback: 'Short feedback notes',
+      repro: 'Repro steps if bugs',
+      platform: 'Your platform + version',
+      samples: 'A few sample projects'
+    },
+    cta: 'Request Beta Access',
+    disclaimer: 'No public downloads. Licenses are issued manually during beta.',
+    titlebar: {
+      inviteOnly: 'Invite-only Beta'
+    }
   },
   
   // Timeline

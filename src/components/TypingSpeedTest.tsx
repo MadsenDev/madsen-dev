@@ -173,7 +173,6 @@ export default function TypingSpeedTest({
               onChange={handleInputChange}
               className="w-full max-w-2xl bg-slate-800 border border-slate-600 rounded-lg px-4 py-3 text-white font-mono text-lg focus:outline-none focus:border-blue-500"
               placeholder="Start typing here..."
-              autoFocus
             />
           </div>
         )}

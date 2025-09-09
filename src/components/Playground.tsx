@@ -4,6 +4,7 @@ import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Terminal, Type, Palette } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { useTerminalTheme } from '@/contexts/TerminalThemeContext';
 import MatrixEffect from './MatrixEffect';
 import CoffeeSteam from './CoffeeSteam';
 import MusicVisualizer from './MusicVisualizer';
@@ -11,6 +12,7 @@ import LoveEffect from './LoveEffect';
 import PartyEffect from './PartyEffect';
 import TypingSpeedTest from './TypingSpeedTest';
 import ColorPaletteGenerator from './ColorPaletteGenerator';
+import TerminalThemeSelector from './TerminalThemeSelector';
 
 type PlaygroundMode = 'terminal' | 'typing' | 'colors';
 
@@ -23,6 +25,7 @@ interface TypingStats {
 
 export default function Playground() {
   const { t } = useLanguage();
+  const { getThemeStyles } = useTerminalTheme();
   const [currentMode, setCurrentMode] = useState<PlaygroundMode>('terminal');
   const [consoleHistory, setConsoleHistory] = useState<string[]>([]);
   const [consoleInput, setConsoleInput] = useState('');
@@ -282,6 +285,73 @@ export default function Playground() {
         setShowPartyEffect(true);
         setTimeout(() => setShowPartyEffect(false), 5000);
         break;
+      case 'weather':
+        await typeInTerminal([
+          '🌤️ WEATHER REPORT',
+          '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━',
+          '📍 Location: Halden, Norway',
+          '🌡️ Temperature: 12°C (54°F)',
+          '☁️ Conditions: Partly Cloudy',
+          '💨 Wind: 8 km/h NW',
+          '🌧️ Humidity: 65%',
+          '📊 Perfect weather for coding! ☕',
+          '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━'
+        ]);
+        break;
+      case 'joke':
+        const jokes = [
+          'Why do programmers prefer dark mode? Because light attracts bugs! 🐛',
+          'How many programmers does it take to change a light bulb? None, that\'s a hardware problem! 💡',
+          'Why did the programmer quit his job? He didn\'t get arrays! 📊',
+          'What do you call a programmer from Finland? Nerdic! 🇫🇮',
+          'Why do Java developers wear glasses? Because they can\'t C#! 👓'
+        ];
+        const randomJoke = jokes[Math.floor(Math.random() * jokes.length)];
+        await typeInTerminal([
+          '😄 PROGRAMMING JOKE',
+          '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━',
+          randomJoke,
+          '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━'
+        ]);
+        break;
+      case 'quote':
+        const quotes = [
+          'Code is like humor. When you have to explain it, it\'s bad. - Cory House',
+          'First, solve the problem. Then, write the code. - John Johnson',
+          'Experience is the name everyone gives to their mistakes. - Oscar Wilde',
+          'The best error message is the one that never shows up. - Thomas Fuchs',
+          'Programming is the art of telling another human being what one wants the computer to do. - Donald Knuth'
+        ];
+        const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+        await typeInTerminal([
+          '💭 INSPIRATIONAL QUOTE',
+          '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━',
+          `"${randomQuote}"`,
+          '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━'
+        ]);
+        break;
+      case 'ascii':
+        const asciiArt = [
+          '    ╔══════════════════════════════════╗',
+          '    ║        CHRISTOFFER MADSEN        ║',
+          '    ║      Full-Stack Developer        ║',
+          '    ║                                  ║',
+          '    ║    ╔════════════════════════╗    ║',
+          '    ║    ║  React • Next.js • TS  ║    ║',
+          '    ║    ║  Node.js • MySQL • Git ║    ║',
+          '    ║    ╚════════════════════════╝    ║',
+          '    ║                                  ║',
+          '    ║    💻 Building the future        ║',
+          '    ║    🚀 One line of code at a time ║',
+          '    ╚══════════════════════════════════╝'
+        ];
+        await typeInTerminal([
+          '🎨 ASCII ART',
+          '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━',
+          ...asciiArt,
+          '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━'
+        ]);
+        break;
       case 'help':
         await typeInTerminal([
           '📚 AVAILABLE COMMANDS',
@@ -292,8 +362,11 @@ export default function Playground() {
           '🎮 FUN COMMANDS:',
           `   game, party, matrix, music, coffee, love, rocket, target, trophy`,
           '',
+          '🆕 NEW COMMANDS:',
+          `   weather, joke, quote, ascii`,
+          '',
           '📊 STATUS:',
-          '   All Commands Unlocked',
+          '   All Commands Unlocked (14 total)',
           '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━'
         ]);
         break;
@@ -585,9 +658,9 @@ export default function Playground() {
                 </div>
 
                 {/* Terminal Interface */}
-                <div className="bg-slate-900 border border-slate-700 rounded-lg p-4">
+                <div className={`${getThemeStyles().background} border ${getThemeStyles().border} rounded-lg p-4`}>
                   <div className="flex items-center justify-between mb-4">
-                    <h3 className="text-white font-medium">Developer Terminal</h3>
+                    <h3 className={`${getThemeStyles().text} font-medium`}>Developer Terminal</h3>
                     <div className="flex items-center gap-2">
                       <div className="w-3 h-3 bg-red-500 rounded-full"></div>
                       <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
@@ -595,7 +668,15 @@ export default function Playground() {
                     </div>
                   </div>
                   
-                                      <div className="bg-black rounded p-3 mb-4 h-64 overflow-y-auto font-mono text-sm" ref={terminalRef}>
+                  <div 
+                    className={`${getThemeStyles().background === 'bg-slate-900' ? 'bg-black' : getThemeStyles().background} rounded p-3 mb-4 h-64 overflow-y-auto font-mono text-sm cursor-text ${getThemeStyles().text}`} 
+                    ref={terminalRef}
+                    onClick={() => {
+                      // Focus the input when clicking on the terminal area
+                      const input = document.querySelector('input[type="text"]') as HTMLInputElement;
+                      if (input) input.focus();
+                    }}
+                  >
                       <div className="text-green-400 mb-2">{t('terminal.welcome')}</div>
                       <div className="text-gray-400 mb-2">{t('terminal.helpText')}</div>
 
@@ -605,14 +686,13 @@ export default function Playground() {
                   </div>
                   
                   <form onSubmit={handleConsoleSubmit} className="flex gap-2">
-                    <span className="text-green-400 font-mono">$</span>
+                    <span className={`${getThemeStyles().prompt} font-mono`}>$</span>
                     <input
                       type="text"
                       value={consoleInput}
                       onChange={(e) => setConsoleInput(e.target.value)}
-                      className="flex-1 bg-transparent text-white outline-none font-mono"
+                      className={`flex-1 bg-transparent ${getThemeStyles().text} outline-none font-mono`}
                       placeholder={t('playground.terminal.placeholder')}
-                      autoFocus
                     />
                   </form>
                 </div>
@@ -721,6 +801,34 @@ export default function Playground() {
                     >
                       party
                     </button>
+                    <button
+                      key="weather"
+                      onClick={() => handleConsoleCommand('weather')}
+                      className="bg-slate-800 hover:bg-slate-700 text-white px-3 py-1 rounded text-sm transition-colors"
+                    >
+                      weather
+                    </button>
+                    <button
+                      key="joke"
+                      onClick={() => handleConsoleCommand('joke')}
+                      className="bg-slate-800 hover:bg-slate-700 text-white px-3 py-1 rounded text-sm transition-colors"
+                    >
+                      joke
+                    </button>
+                    <button
+                      key="quote"
+                      onClick={() => handleConsoleCommand('quote')}
+                      className="bg-slate-800 hover:bg-slate-700 text-white px-3 py-1 rounded text-sm transition-colors"
+                    >
+                      quote
+                    </button>
+                    <button
+                      key="ascii"
+                      onClick={() => handleConsoleCommand('ascii')}
+                      className="bg-slate-800 hover:bg-slate-700 text-white px-3 py-1 rounded text-sm transition-colors"
+                    >
+                      ascii
+                    </button>
                   </div>
                 </div>
               </div>
@@ -737,13 +845,18 @@ export default function Playground() {
             )}
 
             {currentMode === 'colors' && (
-              <ColorPaletteGenerator 
-                currentColor={currentColor}
-                setCurrentColor={setCurrentColor}
-                colorHistory={colorHistory}
-                generateRandomColor={generateRandomColor}
-                copyToClipboard={copyToClipboard}
-              />
+              <div className="space-y-8">
+                <ColorPaletteGenerator 
+                  currentColor={currentColor}
+                  setCurrentColor={setCurrentColor}
+                  colorHistory={colorHistory}
+                  generateRandomColor={generateRandomColor}
+                  copyToClipboard={copyToClipboard}
+                />
+                <div className="bg-slate-800/30 backdrop-blur-sm border border-slate-700/50 rounded-xl p-6">
+                  <TerminalThemeSelector />
+                </div>
+              </div>
             )}
           </motion.div>
         </AnimatePresence>

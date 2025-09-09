@@ -38,6 +38,7 @@ export const no = {
     viewCode: 'Kode',
     moreTechnologies: 'fler',
     categories: {
+      all: 'Alle',
       work: 'Arbeid',
       personal: 'Personlig',
       freelance: 'Frilans',
@@ -83,6 +84,19 @@ export const no = {
     emailMe: 'Send Meg E-post',
     availableFor: 'Tilgjengelig for frilansarbeid',
     openTo: 'Åpen for nye muligheter',
+    letsWorkTogether: 'La oss jobbe sammen',
+    labels: {
+      email: 'E-post',
+      location: 'Lokasjon',
+      responseTime: 'Responstid',
+      usuallyWithin: 'Som regel innen 24 timer'
+    },
+    outOfOrder: {
+      title: 'Kontaktskjema midlertidig utilgjengelig',
+      description: 'Vi gjør litt vedlikehold. I mellomtiden, ta kontakt via e-post så svarer jeg snart.',
+      mailCta: 'Send e-post',
+      replySLA: 'Svarer vanligvis innen 24 timer'
+    }
   },
   
   footer: {
@@ -212,6 +226,50 @@ export const no = {
     indexeddb: 'IndexedDB',
     zustand: 'Zustand State Management',
     apiDevelopment: 'API Utvikling',
+  },
+
+  skillsViz: {
+    header: {
+      title: 'Tekniske Ferdigheter',
+      subtitle: 'En omfattende oversikt over mine tekniske ferdigheter på tvers av domener'
+    },
+    modes: {
+      categories: 'Kategorier',
+      bars: 'Progresjonsstolper',
+      radar: 'Radardiagram'
+    },
+    stats: {
+      total: 'Totale ferdigheter',
+      advanced: 'Avansert (90%+)',
+      proficient: 'Dyktig (80%+)',
+      learning: 'Lærer'
+    }
+  },
+
+  tvashtar: {
+    title: 'Tvashtar Editor',
+    beta: 'Beta',
+    licenseGated: 'Lisensstyrt',
+    description: 'En fokusert editor for å bygge React + Tailwind UI-er med live canvas, enhetsforhåndsvisning og plugg‑innbibliotek. Betaen er invitasjonsbasert for å holde tilbakemeldingssløyfer korte og levere raskt. Passer det arbeidsflyten din, utsteder jeg en lisens og setter deg opp.',
+    test: {
+      title: 'Hva du tester',
+      canvas: 'Canvas-redigeringsflyt',
+      presets: 'Forhåndsinnstillinger & snippets',
+      toggles: 'Bibliotek-tilkoblinger',
+      save: 'Lagre/åpne .tvs'
+    },
+    need: {
+      title: 'Hva jeg trenger',
+      feedback: 'Korte tilbakemeldinger',
+      repro: 'Reproduserbare steg ved feil',
+      platform: 'Plattform + versjon',
+      samples: 'Noen eksempelprosjekter'
+    },
+    cta: 'Be om Beta-tilgang',
+    disclaimer: 'Ingen offentlige nedlastinger. Lisenser utstedes manuelt i beta.',
+    titlebar: {
+      inviteOnly: 'Kun invitasjon Beta'
+    }
   },
   
   // Timeline

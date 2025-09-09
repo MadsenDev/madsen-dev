@@ -12,6 +12,18 @@
   --font-mono: 'JetBrains Mono', 'Fira Code', 'Monaco', 'Cascadia Code', 'Roboto Mono', 'Consolas', 'Liberation Mono', 'Courier New', monospace;
 }
 
+/* Light mode variables */
+.light {
+  --background: #ffffff;
+  --foreground: #1a1a1a;
+}
+
+/* Dark mode variables (default) */
+.dark {
+  --background: #0a0a0a;
+  --foreground: #ededed;
+}
+
 * {
   box-sizing: border-box;
   padding: 0;
@@ -61,4 +73,208 @@ body {
 /* Smooth transitions */
 * {
   transition: color 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Light mode specific styles */
+.light body {
+  background: var(--background);
+  color: var(--foreground);
+}
+
+.light .bg-slate-950 {
+  background-color: #f8fafc;
+}
+
+.light .bg-slate-900 {
+  background-color: #f1f5f9;
+}
+
+.light .bg-slate-800 {
+  background-color: #e2e8f0;
+}
+
+.light .text-white {
+  color: #1a1a1a;
+}
+
+.light .text-gray-300 {
+  color: #4a5568;
+}
+
+.light .text-gray-400 {
+  color: #718096;
+}
+
+.light .border-slate-700 {
+  border-color: #cbd5e0;
+}
+
+.light .border-slate-600 {
+  border-color: #a0aec0;
+}
+
+/* Mobile and Touch Optimizations */
+@media (hover: none) and (pointer: coarse) {
+  /* Touch devices */
+  .touch-manipulation {
+    touch-action: manipulation;
+  }
+  
+  /* Larger touch targets */
+  button, a, input, select, textarea {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  
+  /* Remove hover effects on touch devices */
+  .hover\:scale-105:hover {
+    transform: none;
+  }
+  
+  .hover\:bg-slate-700:hover {
+    background-color: inherit;
+  }
+  
+  /* Better focus indicators for touch */
+  button:focus-visible,
+  a:focus-visible,
+  input:focus-visible {
+    outline: 2px solid #a855f7;
+    outline-offset: 2px;
+  }
+}
+
+/* Improved scrolling on mobile */
+@media (max-width: 768px) {
+  html {
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  body {
+    overscroll-behavior: none;
+  }
+  
+  /* Prevent zoom on input focus */
+  input, select, textarea {
+    font-size: 16px;
+  }
+}
+
+/* Haptic feedback support */
+@supports (haptic-feedback: light) {
+  button:active {
+    haptic-feedback: light;
+  }
+}
+
+/* Accessibility Improvements */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.focus\:not-sr-only:focus {
+  position: static;
+  width: auto;
+  height: auto;
+  padding: inherit;
+  margin: inherit;
+  overflow: visible;
+  clip: auto;
+  white-space: normal;
+}
+
+/* Focus indicators */
+*:focus-visible {
+  outline: 2px solid #a855f7;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .bg-slate-900 {
+    background-color: #000000;
+  }
+  
+  .text-gray-300 {
+    color: #ffffff;
+  }
+  
+  .border-slate-700 {
+    border-color: #ffffff;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Skip link */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 6px;
+  background: #a855f7;
+  color: white;
+  padding: 8px;
+  text-decoration: none;
+  border-radius: 4px;
+  z-index: 1000;
+}
+
+.skip-link:focus {
+  top: 6px;
+}
+
+/* Screen reader only text */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Focus trap */
+.focus-trap {
+  position: relative;
+}
+
+.focus-trap::before,
+.focus-trap::after {
+  content: '';
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ARIA live regions */
+[aria-live] {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
 }
