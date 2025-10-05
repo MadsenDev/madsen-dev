@@ -1,6 +1,14 @@
 'use client';
 
-import { useEffect, useCallback, useState } from 'react';
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+  type ReactNode,
+} from 'react';
 
 interface AnalyticsEvent {
   type: 'page_view' | 'interaction' | 'custom';
@@ -28,6 +36,12 @@ class PrivacyFriendlyAnalytics {
   private lastActivity: number = Date.now();
   private flushTimer: NodeJS.Timeout | null = null;
   private isOnline: boolean = true;
+  private listeners: {
+    online: () => void;
+    offline: () => void;
+    visibilityChange: () => void;
+    beforeUnload: (event: BeforeUnloadEvent) => void;
+  } | null = null;
 
   constructor(config: AnalyticsConfig) {
     this.config = config;
@@ -41,29 +55,30 @@ class PrivacyFriendlyAnalytics {
   }
 
   private setupEventListeners() {
-    // Track online/offline status
-    window.addEventListener('online', () => {
-      this.isOnline = true;
-      this.flushEvents();
-    });
-
-    window.addEventListener('offline', () => {
-      this.isOnline = false;
-    });
-
-    // Track page visibility changes
-    document.addEventListener('visibilitychange', () => {
-      if (document.hidden) {
+    this.listeners = {
+      online: () => {
+        this.isOnline = true;
         this.flushEvents();
-      } else {
-        this.lastActivity = Date.now();
-      }
-    });
+      },
+      offline: () => {
+        this.isOnline = false;
+      },
+      visibilityChange: () => {
+        if (document.hidden) {
+          this.flushEvents();
+        } else {
+          this.lastActivity = Date.now();
+        }
+      },
+      beforeUnload: () => {
+        this.flushEvents(true); // Force sync flush
+      },
+    };
 
-    // Track beforeunload to flush events
-    window.addEventListener('beforeunload', () => {
-      this.flushEvents(true); // Force sync flush
-    });
+    window.addEventListener('online', this.listeners.online);
+    window.addEventListener('offline', this.listeners.offline);
+    document.addEventListener('visibilitychange', this.listeners.visibilityChange);
+    window.addEventListener('beforeunload', this.listeners.beforeUnload);
   }
 
   private startFlushTimer() {
@@ -150,7 +165,7 @@ class PrivacyFriendlyAnalytics {
       type: 'page_view',
       category: 'navigation',
       action: 'page_view',
-      label: path,
+      label: title ?? path,
       value: 1
     });
   }
@@ -165,7 +180,7 @@ class PrivacyFriendlyAnalytics {
     });
   }
 
-  trackCustomEvent(name: string, properties?: Record<string, any>) {
+  trackCustomEvent(name: string, properties?: Record<string, unknown>) {
     this.track({
       type: 'custom',
       category: 'custom',
@@ -181,9 +196,26 @@ class PrivacyFriendlyAnalytics {
     });
   }
 
+  setEnabled(enabled: boolean) {
+    this.config = { ...this.config, enabled };
+
+    if (!enabled) {
+      this.events = [];
+    }
+  }
+
   destroy() {
     if (this.flushTimer) {
       clearInterval(this.flushTimer);
+      this.flushTimer = null;
+    }
+
+    if (this.listeners) {
+      window.removeEventListener('online', this.listeners.online);
+      window.removeEventListener('offline', this.listeners.offline);
+      document.removeEventListener('visibilitychange', this.listeners.visibilityChange);
+      window.removeEventListener('beforeunload', this.listeners.beforeUnload);
+      this.listeners = null;
     }
     this.flushEvents(true);
   }
@@ -192,28 +224,50 @@ class PrivacyFriendlyAnalytics {
 // Global analytics instance
 let analyticsInstance: PrivacyFriendlyAnalytics | null = null;
 
-export function useAnalytics() {
+interface AnalyticsContextValue {
+  isEnabled: boolean;
+  trackPageView: (path: string, title?: string) => void;
+  trackInteraction: (
+    category: string,
+    action: string,
+    label?: string,
+    value?: number
+  ) => void;
+  trackCustomEvent: (name: string, properties?: Record<string, unknown>) => void;
+  setConsent: (consent: boolean) => void;
+}
+
+const AnalyticsContext = createContext<AnalyticsContextValue | null>(null);
+
+const ANALYTICS_CONFIG: Omit<AnalyticsConfig, 'enabled'> = {
+  endpoint: '/api/analytics',
+  sessionTimeout: 30 * 60 * 1000,
+  batchSize: 10,
+  flushInterval: 30 * 1000,
+};
+
+function getOrCreateAnalytics(enabled: boolean) {
+  if (!analyticsInstance) {
+    analyticsInstance = new PrivacyFriendlyAnalytics({
+      enabled,
+      ...ANALYTICS_CONFIG,
+    });
+  } else {
+    analyticsInstance.setEnabled(enabled);
+  }
+
+  return analyticsInstance;
+}
+
+export function AnalyticsProvider({ children }: { children: ReactNode }) {
   const [isEnabled, setIsEnabled] = useState(false);
 
   useEffect(() => {
-    // Initialize analytics with user consent
-    const consent = localStorage.getItem('analytics-consent');
-    const enabled = consent === 'true';
-
-    if (!analyticsInstance) {
-      analyticsInstance = new PrivacyFriendlyAnalytics({
-        enabled,
-        endpoint: '/api/analytics', // You'll need to create this API endpoint
-        sessionTimeout: 30 * 60 * 1000, // 30 minutes
-        batchSize: 10,
-        flushInterval: 30 * 1000 // 30 seconds
-      });
-    }
-
-    setIsEnabled(enabled);
+    const consent = localStorage.getItem('analytics-consent') === 'true';
+    setIsEnabled(consent);
+    getOrCreateAnalytics(consent);
 
     return () => {
-      // Cleanup on unmount
       if (analyticsInstance) {
         analyticsInstance.destroy();
         analyticsInstance = null;
@@ -222,9 +276,7 @@ export function useAnalytics() {
   }, []);
 
   const trackPageView = useCallback((path: string, title?: string) => {
-    if (analyticsInstance) {
-      analyticsInstance.trackPageView(path, title);
-    }
+    analyticsInstance?.trackPageView(path, title);
   }, []);
 
   const trackInteraction = useCallback((
@@ -233,40 +285,44 @@ export function useAnalytics() {
     label?: string,
     value?: number
   ) => {
-    if (analyticsInstance) {
-      analyticsInstance.trackInteraction(category, action, label, value);
-    }
+    analyticsInstance?.trackInteraction(category, action, label, value);
   }, []);
 
-  const trackCustomEvent = useCallback((name: string, properties?: Record<string, any>) => {
-    if (analyticsInstance) {
-      analyticsInstance.trackCustomEvent(name, properties);
-    }
+  const trackCustomEvent = useCallback((name: string, properties?: Record<string, unknown>) => {
+    analyticsInstance?.trackCustomEvent(name, properties);
   }, []);
 
   const setConsent = useCallback((consent: boolean) => {
     localStorage.setItem('analytics-consent', consent.toString());
     setIsEnabled(consent);
-    
-    if (analyticsInstance) {
-      // Reinitialize with new consent
-      analyticsInstance.destroy();
-      analyticsInstance = new PrivacyFriendlyAnalytics({
-        enabled: consent,
-        endpoint: '/api/analytics',
-        sessionTimeout: 30 * 60 * 1000,
-        batchSize: 10,
-        flushInterval: 30 * 1000
-      });
-    }
+    getOrCreateAnalytics(consent);
   }, []);
 
-  return {
-    isEnabled,
-    trackPageView,
-    trackInteraction,
-    trackCustomEvent,
-    setConsent
-  };
+  const value = useMemo<AnalyticsContextValue>(
+    () => ({
+      isEnabled,
+      trackPageView,
+      trackInteraction,
+      trackCustomEvent,
+      setConsent,
+    }),
+    [isEnabled, trackCustomEvent, trackInteraction, trackPageView, setConsent]
+  );
+
+  return (
+    <AnalyticsContext.Provider value={value}>
+      {children}
+    </AnalyticsContext.Provider>
+  );
+}
+
+export function useAnalytics() {
+  const context = useContext(AnalyticsContext);
+
+  if (!context) {
+    throw new Error('useAnalytics must be used within an AnalyticsProvider');
+  }
+
+  return context;
 }
 

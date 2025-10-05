@@ -8,6 +8,7 @@ import { AnalyticsConsent } from "@/components/AnalyticsConsent";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import { ThemeProvider } from "@/contexts/ThemeContext";
 import { TerminalThemeProvider } from "@/contexts/TerminalThemeContext";
+import { AnalyticsProvider } from "@/hooks/useAnalytics";
 import { Suspense } from "react";
 
 export const metadata: Metadata = {
@@ -374,20 +375,22 @@ export default function RootLayout({
           </div>
         </div>
 
-                  <Suspense fallback={<div className="min-h-screen bg-slate-900 flex items-center justify-center text-white">Loading...</div>}>
-            <ThemeProvider>
-              <TerminalThemeProvider>
-                <LanguageProvider>
-                  <SiteHeader />
-                  <main id="main-content" tabIndex={-1}>
-                    {children}
-                  </main>
-                  <SiteFooter />
-                  <MobileNavigation />
-                  <AnalyticsConsent />
-                </LanguageProvider>
-              </TerminalThemeProvider>
-            </ThemeProvider>
+          <Suspense fallback={<div className="min-h-screen bg-slate-900 flex items-center justify-center text-white">Loading...</div>}>
+            <AnalyticsProvider>
+              <ThemeProvider>
+                <TerminalThemeProvider>
+                  <LanguageProvider>
+                    <SiteHeader />
+                    <main id="main-content" tabIndex={-1}>
+                      {children}
+                    </main>
+                    <SiteFooter />
+                    <MobileNavigation />
+                    <AnalyticsConsent />
+                  </LanguageProvider>
+                </TerminalThemeProvider>
+              </ThemeProvider>
+            </AnalyticsProvider>
           </Suspense>
 
                            <script
