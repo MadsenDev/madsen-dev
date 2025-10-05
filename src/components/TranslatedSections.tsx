@@ -86,8 +86,12 @@ export default function TranslatedSections() {
           </div>
         ) : (
           <div className="text-center py-12">
-            <div className="text-gray-400 text-lg mb-2">No projects found</div>
-            <div className="text-gray-500 text-sm">Try adjusting your search or filter criteria</div>
+            <div className="text-gray-400 text-lg mb-2">
+              {t('projects.filters.empty.title')}
+            </div>
+            <div className="text-gray-500 text-sm">
+              {t('projects.filters.empty.description')}
+            </div>
           </div>
         )}
       </Section>

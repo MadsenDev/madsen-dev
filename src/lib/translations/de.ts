@@ -43,6 +43,18 @@ export const de = {
       personal: 'Persönlich',
       freelance: 'Freelance',
     },
+    filters: {
+      toggle: {
+        show: 'Filter anzeigen',
+        hide: 'Filter ausblenden',
+      },
+      searchPlaceholder: 'Suche nach Projekten nach Name, Technologie oder Kategorie...',
+      clear: 'Filter zurücksetzen',
+      empty: {
+        title: 'Keine Projekte gefunden',
+        description: 'Versuche, deine Suche oder Filterkriterien anzupassen',
+      },
+    },
   },
   
   playground: {
