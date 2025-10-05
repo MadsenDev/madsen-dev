@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import { motion } from 'motion/react';
 import { Search, Filter, X } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
@@ -44,8 +44,7 @@ export default function ProjectFilter({ onFilteredProjects }: ProjectFilterProps
     return filtered;
   }, [searchTerm, selectedCategory]);
 
-  // Update parent component when filtered projects change
-  useMemo(() => {
+  useEffect(() => {
     onFilteredProjects(filteredProjects);
   }, [filteredProjects, onFilteredProjects]);
 
