@@ -46,9 +46,22 @@ export interface Translations {
     viewCode: string;
     moreTechnologies: string;
     categories: {
+      all: string;
       work: string;
       personal: string;
       freelance: string;
+    };
+    filters: {
+      toggle: {
+        show: string;
+        hide: string;
+      };
+      searchPlaceholder: string;
+      clear: string;
+      empty: {
+        title: string;
+        description: string;
+      };
     };
   };
   

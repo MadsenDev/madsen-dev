@@ -70,7 +70,11 @@ export default function ProjectFilter({ onFilteredProjects }: ProjectFilterProps
           whileTap={{ scale: 0.95 }}
         >
           <Filter size={16} />
-          <span>{isExpanded ? 'Hide' : 'Filter'}</span>
+          <span>
+            {isExpanded
+              ? t('projects.filters.toggle.hide')
+              : t('projects.filters.toggle.show')}
+          </span>
         </motion.button>
       </div>
 
@@ -90,7 +94,7 @@ export default function ProjectFilter({ onFilteredProjects }: ProjectFilterProps
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={16} />
             <input
               type="text"
-              placeholder="Search projects by name, technology, or category..."
+              placeholder={t('projects.filters.searchPlaceholder')}
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               className="w-full pl-10 pr-4 py-2 bg-slate-700/50 border border-slate-600/50 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-purple-500/50 focus:bg-slate-700/70 transition-all duration-300"
@@ -135,7 +139,7 @@ export default function ProjectFilter({ onFilteredProjects }: ProjectFilterProps
               whileTap={{ scale: 0.95 }}
             >
               <X size={14} />
-              Clear filters
+              {t('projects.filters.clear')}
             </motion.button>
           )}
         </div>

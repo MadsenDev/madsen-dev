@@ -43,6 +43,18 @@ export const no = {
       personal: 'Personlig',
       freelance: 'Frilans',
     },
+    filters: {
+      toggle: {
+        show: 'Vis filtre',
+        hide: 'Skjul filtre',
+      },
+      searchPlaceholder: 'Søk etter prosjekter etter navn, teknologi eller kategori...',
+      clear: 'Nullstill filtre',
+      empty: {
+        title: 'Ingen prosjekter funnet',
+        description: 'Prøv å justere søket eller filtervalgene dine',
+      },
+    },
   },
   
   playground: {
