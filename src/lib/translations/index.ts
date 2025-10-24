@@ -44,6 +44,9 @@ export interface Translations {
     subtitle: string;
     viewDemo: string;
     viewCode: string;
+    viewCaseStudy: string;
+    backToHome: string;
+    technologiesUsed: string;
     moreTechnologies: string;
     categories: {
       all: string;

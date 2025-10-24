@@ -1,11 +1,13 @@
 'use client';
 
 import { motion } from 'motion/react';
-import { ExternalLink, Github, Calendar, Code } from 'lucide-react';
+import { ExternalLink, Github, Calendar, Code, ArrowUpRight } from 'lucide-react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useLanguage } from '@/contexts/LanguageContext';
 
 interface ProjectCardProps {
+  id: string;
   title: string;
   descriptionKey: string;
   technologies: string[];
@@ -16,6 +18,7 @@ interface ProjectCardProps {
 }
 
 export default function ProjectCard({
+  id,
   title,
   descriptionKey,
   technologies,
@@ -117,7 +120,7 @@ export default function ProjectCard({
           </div>
           
           {/* Links */}
-          <div className="flex gap-2 pt-2">
+          <div className="flex flex-wrap gap-2 pt-2">
             {liveUrl && (
               <a
                 href={liveUrl}
@@ -140,6 +143,13 @@ export default function ProjectCard({
                 {t('projects.viewCode')}
               </a>
             )}
+            <Link
+              href={`/projects/${id}`}
+              className="flex items-center gap-1 text-xs text-purple-300 hover:text-white transition-colors duration-300 hover:bg-purple-500/10 px-2 py-1 rounded-md backdrop-blur-sm"
+            >
+              <ArrowUpRight size={12} />
+              {t('projects.viewCaseStudy')}
+            </Link>
           </div>
         </div>
       </div>

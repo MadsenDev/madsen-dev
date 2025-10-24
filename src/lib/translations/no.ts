@@ -36,6 +36,9 @@ export const no = {
     subtitle: 'En visning av arbeidet mitt på tvers av ulike domener',
     viewDemo: 'Demo',
     viewCode: 'Kode',
+    viewCaseStudy: 'Case-studie',
+    backToHome: 'Tilbake til forsiden',
+    technologiesUsed: 'Teknologier brukt',
     moreTechnologies: 'fler',
     categories: {
       all: 'Alle',

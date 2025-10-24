@@ -74,6 +74,7 @@ export default function TranslatedSections() {
             {filteredProjects.map((project) => (
               <ProjectCard
                 key={project.id}
+                id={project.id}
                 title={project.title}
                 descriptionKey={project.descriptionKey}
                 technologies={project.technologies}
