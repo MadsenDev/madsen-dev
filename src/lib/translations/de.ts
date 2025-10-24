@@ -36,6 +36,9 @@ export const de = {
     subtitle: 'Eine Übersicht meiner Arbeit in verschiedenen Bereichen',
     viewDemo: 'Demo',
     viewCode: 'Code',
+    viewCaseStudy: 'Fallstudie',
+    backToHome: 'Zurück zur Startseite',
+    technologiesUsed: 'Eingesetzte Technologien',
     moreTechnologies: 'mehr',
     categories: {
       all: 'Alle',

@@ -36,6 +36,9 @@ export const es = {
     subtitle: 'Una muestra de mi trabajo en diferentes dominios',
     viewDemo: 'Demo',
     viewCode: 'Código',
+    viewCaseStudy: 'Caso de estudio',
+    backToHome: 'Volver al inicio',
+    technologiesUsed: 'Tecnologías utilizadas',
     moreTechnologies: 'más',
     categories: {
       all: 'Todos',
