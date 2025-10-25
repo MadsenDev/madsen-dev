@@ -1,8 +1,10 @@
 'use client';
 
-import { createContext, useContext, useState, ReactNode, useEffect } from 'react';
+import { createContext, useContext, useState, ReactNode, useEffect, useCallback } from 'react';
 import { useSearchParams, usePathname } from 'next/navigation';
 import { Language, useTranslations } from '@/lib/translations/index';
+
+const SUPPORTED_LANGUAGES: Language[] = ['en', 'no', 'es', 'fr', 'de'];
 
 interface LanguageContextType {
   language: Language;
@@ -16,49 +18,49 @@ const LanguageContext = createContext<LanguageContextType | undefined>(undefined
 export function LanguageProvider({ children }: { children: ReactNode }) {
   const searchParams = useSearchParams();
   const pathname = usePathname();
-  
-  // Get initial language from URL params, localStorage, or browser preference
-  const getInitialLanguage = (): Language => {
-    // First, check URL params
-    const urlLang = searchParams.get('lang') as Language;
-    if (urlLang && ['en', 'no', 'es', 'fr', 'de'].includes(urlLang)) {
+  const urlLanguage = searchParams.get('lang') as Language | null;
+
+  const detectLanguage = useCallback((): Language => {
+    const urlLang = searchParams.get('lang') as Language | null;
+    if (urlLang && SUPPORTED_LANGUAGES.includes(urlLang)) {
       return urlLang;
     }
-    
-    // Then, check localStorage
+
     if (typeof window !== 'undefined') {
-      const storedLang = localStorage.getItem('preferred-language') as Language;
-      if (storedLang && ['en', 'no', 'es', 'fr', 'de'].includes(storedLang)) {
+      const storedLang = localStorage.getItem('preferred-language') as Language | null;
+      if (storedLang && SUPPORTED_LANGUAGES.includes(storedLang)) {
         return storedLang;
       }
-    }
-    
-    // Finally, check browser language
-    if (typeof window !== 'undefined') {
+
       const browserLang = navigator.language;
       if (browserLang.startsWith('no')) return 'no';
       if (browserLang.startsWith('es')) return 'es';
       if (browserLang.startsWith('fr')) return 'fr';
       if (browserLang.startsWith('de')) return 'de';
     }
-    
-    return 'en';
-  };
 
-  const [language, setLanguage] = useState<Language>(getInitialLanguage);
+    return 'en';
+  }, [searchParams]);
+
+  const [language, setLanguage] = useState<Language>(() => (
+    urlLanguage && SUPPORTED_LANGUAGES.includes(urlLanguage) ? urlLanguage : 'en'
+  ));
   const translations = useTranslations(language);
 
-  // Update language when URL params change (but only if it's different)
   useEffect(() => {
-    const urlLang = searchParams.get('lang') as Language;
-    if (urlLang && ['en', 'no', 'es', 'fr', 'de'].includes(urlLang) && urlLang !== language) {
-      // Only update if the URL language is different from current state
-      setLanguage(urlLang);
-      if (typeof window !== 'undefined') {
-        localStorage.setItem('preferred-language', urlLang);
+    const detectedLanguage = detectLanguage();
+    setLanguage((prev) => {
+      if (prev === detectedLanguage) {
+        return prev;
       }
-    }
-  }, [searchParams, language]); // Include language to properly track changes
+
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('preferred-language', detectedLanguage);
+      }
+
+      return detectedLanguage;
+    });
+  }, [detectLanguage]);
 
   const t = (key: string): string => {
     const keys = key.split('.');
