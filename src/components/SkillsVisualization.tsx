@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import { createPortal } from 'react-dom';
 import { motion } from 'motion/react';
-import { Code, Server, Wrench, Globe, ChevronRight } from 'lucide-react';
+import { Code, Server, Wrench, Globe } from 'lucide-react';
 import { skills, Skill, getSkillsByCategory, getTopSkills } from '@/data/skills';
 import { useLanguage } from '@/contexts/LanguageContext';
 

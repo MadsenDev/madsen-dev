@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef } from 'react';
 import { motion } from 'motion/react';
 import { ChevronDown, ChevronUp } from 'lucide-react';
 import { useAccessibility, keyboardNavigation } from '@/hooks/useAccessibility';

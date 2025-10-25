@@ -3,12 +3,7 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Menu, X, ChevronLeft, ChevronRight } from 'lucide-react';
-import { useLanguage } from '@/contexts/LanguageContext';
 import { useTouchGestures, hapticFeedback } from '@/hooks/useTouchGestures';
-
-interface MobileNavigationProps {
-  // No props needed - component manages its own state
-}
 
 const sections = [
   { id: 'home', label: 'Home' },
@@ -19,19 +14,18 @@ const sections = [
   { id: 'contact', label: 'Contact' }
 ];
 
-export default function MobileNavigation({}: MobileNavigationProps) {
-  const { t } = useLanguage();
+export default function MobileNavigation() {
   const [isOpen, setIsOpen] = useState(false);
   const [currentIndex, setCurrentIndex] = useState(0);
 
   // Update current index based on scroll position
   useEffect(() => {
     const updateCurrentSection = () => {
-      const sections = ['home', 'about', 'projects', 'blog', 'playground', 'contact'];
+      const sectionIds = ['home', 'about', 'projects', 'blog', 'playground', 'contact'];
       const scrollPosition = window.scrollY + 100; // Offset for better detection
-      
-      for (let i = sections.length - 1; i >= 0; i--) {
-        const element = document.getElementById(sections[i]);
+
+      for (let i = sectionIds.length - 1; i >= 0; i--) {
+        const element = document.getElementById(sectionIds[i]);
         if (element && element.offsetTop <= scrollPosition) {
           setCurrentIndex(i);
           break;
@@ -76,6 +70,8 @@ export default function MobileNavigation({}: MobileNavigationProps) {
     }
     setIsOpen(false);
   };
+
+  const currentSectionId = sections[currentIndex]?.id;
 
   return (
     <>
@@ -143,7 +139,7 @@ export default function MobileNavigation({}: MobileNavigationProps) {
                       key={section.id}
                       onClick={() => scrollToSection(section.id)}
                       className={`w-full text-left p-4 rounded-lg transition-all duration-300 ${
-                        currentSection === section.id
+                        currentSectionId === section.id
                           ? 'bg-purple-600 text-white'
                           : 'text-gray-300 hover:bg-slate-800/50 hover:text-white'
                       }`}

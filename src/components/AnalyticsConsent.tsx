@@ -14,6 +14,12 @@ export function AnalyticsConsent() {
     }
   }, []);
 
+  useEffect(() => {
+    if (isEnabled) {
+      setShowBanner(false);
+    }
+  }, [isEnabled]);
+
   if (!showBanner) return null;
 
   return (

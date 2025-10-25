@@ -3,12 +3,10 @@
 import { useState } from 'react';
 import { motion } from 'motion/react';
 import { BookOpen, Filter, Search, X } from 'lucide-react';
-import { useLanguage } from '@/contexts/LanguageContext';
-import { articles, Article, getFeaturedArticles, getRecentArticles } from '@/data/articles';
+import { articles, type Article, getFeaturedArticles } from '@/data/articles';
 import ArticleCard from './ArticleCard';
 
 export default function BlogSection() {
-  const { t } = useLanguage();
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [isExpanded, setIsExpanded] = useState(false);
@@ -21,8 +19,8 @@ export default function BlogSection() {
     { key: 'technology', label: 'Technology' },
   ];
 
-  const filteredArticles = articles.filter(article => {
-    const matchesSearch = searchTerm.trim() === '' || 
+  const filteredArticles = articles.filter((article: Article) => {
+    const matchesSearch = searchTerm.trim() === '' ||
       article.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
       article.excerpt.toLowerCase().includes(searchTerm.toLowerCase()) ||
       article.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()));
@@ -33,14 +31,13 @@ export default function BlogSection() {
   });
 
   const featuredArticles = getFeaturedArticles();
-  const recentArticles = getRecentArticles(3);
 
   const clearFilters = () => {
     setSearchTerm('');
     setSelectedCategory('all');
   };
 
-  const hasActiveFilters = searchTerm.trim() || selectedCategory !== 'all';
+  const hasActiveFilters = searchTerm.trim().length > 0 || selectedCategory !== 'all';
 
   return (
     <section className="py-16 bg-slate-900 relative overflow-hidden">

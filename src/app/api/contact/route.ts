@@ -112,7 +112,8 @@ export async function POST(req: NextRequest) {
     }
 
     return NextResponse.json({ ok: true });
-  } catch (err) {
+  } catch (error) {
+    console.error('Failed to process contact request', error);
     return NextResponse.json({ error: 'Invalid request' }, { status: 400 });
   }
 }

@@ -102,7 +102,7 @@ export default function TerminalThemeSelector() {
           </span>
         </div>
         <div className={`text-sm ${styles.text} font-mono`}>
-          <span className={styles.prompt}>$</span> echo "Hello, World!"
+          <span className={styles.prompt}>$</span> echo &quot;Hello, World!&quot;
         </div>
         <div className={`text-sm ${styles.text} font-mono mt-1`}>
           Hello, World!
