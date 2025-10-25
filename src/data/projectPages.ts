@@ -3,6 +3,10 @@ export type ShowcaseIcon =
   | 'bolt'
   | 'layers'
   | 'map'
+  | 'users'
+  | 'calendar'
+  | 'bell'
+  | 'star'
   | 'messages'
   | 'shield'
   | 'palette'
@@ -73,13 +77,13 @@ export const projectShowcases: Record<string, ProjectShowcaseContent> = {
   'gravstellerne-platform': {
     id: 'gravstellerne-platform',
     hero: {
-      eyebrow: 'Gravstellerne Platform',
-      title: 'Coordinating cemetery care at national scale',
-      subtitle: 'Logistics, photos, and customer updates in a single workspace',
+      eyebrow: 'Grave CMS Platform',
+      title: 'Comprehensive cemetery management at scale',
+      subtitle: 'Grave care coordination, customer portals, and operational oversight in one system',
       description:
-        'A unified platform for field crews, administrators, and customers that keeps every grave care task visible from booking to completion. Built to work offline in harsh weather, synchronize instantly, and delight customers with polished before/after updates.',
-      image: '/images/gravstellerne.png',
-      imageAlt: 'Gravstellerne platform screens',
+        'A unified platform for cemetery administrators, field crews, and families that streamlines grave care operations from work order creation to customer satisfaction. Built with offline-first architecture, real-time notifications, and comprehensive customer portals.',
+      image: '/images/grave-cms.png',
+      imageAlt: 'Grave CMS platform screens',
       imageStyle: 'device',
       gradientFrom: 'from-emerald-500/30',
       gradientTo: 'to-slate-900/80',
@@ -87,57 +91,57 @@ export const projectShowcases: Record<string, ProjectShowcaseContent> = {
       backdrop: 'bg-[radial-gradient(circle_at_top,#10b98133,transparent_60%)]'
     },
     stats: [
-      { label: 'Technicians onboarded', value: '25+', description: 'Operating across 4 regions with offline-ready PWA' },
-      { label: 'Photos captured', value: '12k+', description: 'Instant uploads with automatic before/after pairing' },
-      { label: 'Support tickets', value: '-38%', description: 'Customers self-serve with live project timelines' }
+      { label: 'Active users', value: '25+', description: 'Administrators and field crews across multiple cemeteries' },
+      { label: 'Grave records', value: '12k+', description: 'Comprehensive database with photos, coordinates, and care history' },
+      { label: 'Customer satisfaction', value: '+42%', description: 'Families receive transparent updates and can track care progress' }
     ],
     sections: [
       {
-        title: 'Field-ready experience',
-        description: 'A progressive web app that mirrors the rugged conditions crews work in—large tap targets, dark UI for outdoor visibility, and offline caching for rural cemeteries.',
+        title: 'Field operations management',
+        description: 'Streamlined work order system with GPS coordinates, photo documentation, and real-time status updates for cemetery maintenance crews.',
         emphasis: 'dark',
         features: [
-          { title: 'Offline-first PWA', description: 'Work orders, photo capture, and sync queues continue without coverage.', icon: 'cloud' },
-          { title: 'Guided task flows', description: 'Checklists and photo prompts reduce missed requirements.', icon: 'workflow' },
-          { title: 'Instant proof of work', description: 'Before/after galleries auto-build for customer transparency.', icon: 'frame' }
+          { title: 'Work order automation', description: 'Automatic work order generation based on special days and maintenance schedules.', icon: 'workflow' },
+          { title: 'GPS integration', description: 'Precise grave location mapping with Google Maps integration for efficient routing.', icon: 'map' },
+          { title: 'Photo documentation', description: 'Before/after photo capture with automatic organization and customer sharing.', icon: 'frame' }
         ]
       },
       {
-        title: 'Operations command center',
-        description: 'Admins orchestrate crews, route visits, and manage subscriptions with fast dashboards and granular permissions.',
+        title: 'Administrative oversight',
+        description: 'Comprehensive dashboard for cemetery managers to track operations, manage customer relationships, and ensure quality care delivery.',
         emphasis: 'light',
         features: [
-          { title: 'Realtime scheduling', description: 'Drag-and-drop planning with Google Maps overlays.', icon: 'map' },
-          { title: 'Automated invoicing', description: 'Subscription billing, renewal reminders, and payouts.', icon: 'automation' },
-          { title: 'Crew analytics', description: 'Completion velocity and SLA tracking per cemetery.', icon: 'chart' }
+          { title: 'Customer management', description: 'Complete customer profiles with grave ownership, contact history, and service preferences.', icon: 'users' },
+          { title: 'Visit tracking', description: 'Detailed visit logs with photos, comments, and quality ratings from families.', icon: 'calendar' },
+          { title: 'Analytics dashboard', description: 'Performance metrics, completion rates, and customer satisfaction tracking.', icon: 'chart' }
         ]
       },
       {
-        title: 'Customer trust built in',
-        description: 'Families receive personal portals with history, notifications, and a curated story for each visit.',
+        title: 'Family engagement',
+        description: 'Dedicated customer portals where families can view grave care history, receive updates, and provide feedback on services.',
         emphasis: 'accent',
         features: [
-          { title: 'Story-style updates', description: 'Human friendly summaries combining notes and imagery.', icon: 'sparkles' },
-          { title: 'Secure sharing', description: 'Invite relatives with granular viewing permissions.', icon: 'shield' },
-          { title: 'Sentiment triggers', description: 'Detects lapses in care cadence and alerts staff.', icon: 'radar' }
+          { title: 'Personal portals', description: 'Secure family access to grave care history, photos, and upcoming maintenance.', icon: 'shield' },
+          { title: 'Automated notifications', description: 'Email and SMS updates for completed work, special day reminders, and care schedules.', icon: 'bell' },
+          { title: 'Feedback system', description: 'Quality rating system with photo documentation and follow-up workflows.', icon: 'star' }
         ]
       }
     ],
     experience: {
-      title: 'A platform shaped alongside the crews who use it daily',
-      tagline: 'From field interviews to production rollouts',
+      title: 'A platform designed for the unique needs of cemetery operations',
+      tagline: 'From grave care workflows to family satisfaction',
       description:
-        'I embedded with Gravstellerne for multi-week discovery, diagrammed every operational flow, and delivered iterative releases that fit the crews instead of forcing new habits.',
+        'I developed this comprehensive cemetery management system after extensive research into cemetery operations, family expectations, and administrative workflows. The platform balances operational efficiency with emotional sensitivity.',
       bullets: [
-        'Established a shared product vocabulary with ops and founders to prioritize ruthlessly.',
-        'Introduced component-driven design system so new modules stay visually coherent.',
-        'Implemented observability stack to watch sync health and error recovery in real time.'
+        'Designed intuitive interfaces for both technical field crews and non-technical family members.',
+        'Implemented robust notification system with BullMQ for reliable email/SMS delivery.',
+        'Built comprehensive customer portal with secure access controls and family-friendly navigation.'
       ]
     },
     palette: ['#0f172a', '#10b981', '#34d399', '#d1fae5', '#f5f5f4'],
     callToAction: {
-      title: 'Bring order to complex field operations',
-      description: 'Let’s co-design the tooling that crews, managers, and customers genuinely love using.',
+      title: 'Transform cemetery operations with technology',
+      description: 'Let\'s build the tools that honor families while streamlining cemetery management.',
       primaryLabel: 'Start a project conversation',
       secondaryLabel: 'Back to portfolio'
     }
