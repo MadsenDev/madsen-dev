@@ -2,7 +2,7 @@
 
 import { motion } from 'motion/react';
 import { ArrowDown, Github, Linkedin, Mail } from 'lucide-react';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo, useRef } from 'react';
 import { useLanguage } from '@/contexts/LanguageContext';
 
 // Characters for the flipping animation
@@ -12,15 +12,24 @@ export default function Hero() {
   const { t, translations } = useLanguage();
   const [currentRole, setCurrentRole] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
-  const roles = [
-    translations.hero.roles.fullstack,
-    translations.hero.roles.techSupport,
-    translations.hero.roles.problemSolver,
-    translations.hero.roles.toolBuilder
-  ];
+  const isAnimatingRef = useRef(false);
+  const roles = useMemo(
+    () => [
+      translations.hero.roles.fullstack,
+      translations.hero.roles.techSupport,
+      translations.hero.roles.problemSolver,
+      translations.hero.roles.toolBuilder
+    ],
+    [
+      translations.hero.roles.fullstack,
+      translations.hero.roles.problemSolver,
+      translations.hero.roles.techSupport,
+      translations.hero.roles.toolBuilder
+    ]
+  );
 
   // Animated character component
-  const AnimatedChar = ({ char, index }: { char: string; index: number }) => {
+  const AnimatedChar = ({ char, index, isAnimating }: { char: string; index: number; isAnimating: boolean }) => {
     const [displayChar, setDisplayChar] = useState(char);
     const [isFlipping, setIsFlipping] = useState(false);
 
@@ -45,7 +54,7 @@ export default function Hero() {
 
         return () => clearInterval(flipInterval);
       }
-    }, [char, isAnimating, index, shouldAnimate]);
+    }, [char, index, isAnimating, shouldAnimate]);
 
     // For spaces, render them with explicit width
     if (!shouldAnimate) {
@@ -88,16 +97,18 @@ export default function Hero() {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      if (!isAnimating) {
+      if (!isAnimatingRef.current) {
+        isAnimatingRef.current = true;
         setIsAnimating(true);
         setTimeout(() => {
           setCurrentRole((prev) => (prev + 1) % roles.length);
+          isAnimatingRef.current = false;
           setIsAnimating(false);
         }, 800); // Wait for animation to complete
       }
     }, 3000);
     return () => clearInterval(interval);
-  }, [roles.length, isAnimating]); // Include isAnimating to properly track changes
+  }, [roles.length]);
 
   return (
     <section className="h-screen flex items-center justify-center relative overflow-hidden">
@@ -271,7 +282,12 @@ export default function Hero() {
             >
                           <div className="flex items-center justify-center">
               {roles[currentRole].split('').map((char, index) => (
-                <AnimatedChar key={`${currentRole}-${index}`} char={char} index={index} />
+                <AnimatedChar
+                  key={`${currentRole}-${index}`}
+                  char={char}
+                  index={index}
+                  isAnimating={isAnimating}
+                />
               ))}
             </div>
             </motion.div>

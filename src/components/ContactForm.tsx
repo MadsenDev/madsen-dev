@@ -3,7 +3,6 @@
 import { useState } from 'react';
 import { motion } from 'motion/react';
 import { Send, CheckCircle, AlertCircle, Mail, User, MessageSquare } from 'lucide-react';
-import { useLanguage } from '@/contexts/LanguageContext';
 
 interface FormData {
   name: string;
@@ -21,7 +20,6 @@ interface FormErrors {
 }
 
 export default function ContactForm() {
-  const { t } = useLanguage();
   const [formData, setFormData] = useState<FormData>({
     name: '',
     email: '',
@@ -108,6 +106,7 @@ export default function ContactForm() {
       // Reset success status after 5 seconds
       setTimeout(() => setSubmitStatus('idle'), 5000);
     } catch (error) {
+      console.error('Failed to send contact form submission', error);
       setSubmitStatus('error');
       setTimeout(() => setSubmitStatus('idle'), 5000);
     } finally {
@@ -135,7 +134,7 @@ export default function ContactForm() {
             <h3 className="text-2xl font-bold text-white">Get In Touch</h3>
           </div>
           <p className="text-gray-400">
-            Have a project in mind? Let's discuss how we can work together to bring your ideas to life.
+            Have a project in mind? Let’s discuss how we can work together to bring your ideas to life.
           </p>
         </div>
 
@@ -149,7 +148,7 @@ export default function ContactForm() {
             <CheckCircle className="text-green-400" size={20} />
             <div>
               <div className="text-green-400 font-medium">Message sent successfully!</div>
-              <div className="text-green-300 text-sm">I'll get back to you within 24 hours.</div>
+              <div className="text-green-300 text-sm">I’ll get back to you within 24 hours.</div>
             </div>
           </motion.div>
         )}
@@ -249,7 +248,7 @@ export default function ContactForm() {
               value={formData.subject}
               onChange={handleInputChange}
               className={getInputClasses('subject')}
-              placeholder="What's this about?"
+              placeholder="What’s this about?"
               disabled={isSubmitting}
             />
             {errors.subject && (
