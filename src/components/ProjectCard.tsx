@@ -144,7 +144,7 @@ export default function ProjectCard({
               </a>
             )}
             <Link
-              href={`/projects/${id}`}
+              href={id === 'localhost-hub' ? '/projects/localhost-hub' : `/projects/${id}`}
               className="flex items-center gap-1 text-xs text-purple-300 hover:text-white transition-colors duration-300 hover:bg-purple-500/10 px-2 py-1 rounded-md backdrop-blur-sm"
             >
               <ArrowUpRight size={12} />

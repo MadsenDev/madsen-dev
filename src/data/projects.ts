@@ -34,6 +34,17 @@ export const projects: Project[] = [
     category: 'personal'
   },
   {
+    id: 'localhost-hub',
+    title: 'Localhost Hub',
+    descriptionKey: 'projectDescriptions.localhostHub',
+    technologies: ['Electron', 'React', 'TypeScript', 'Vite', 'Node.js', 'IPC', 'Process Management', 'Git', 'File System'],
+    image: '/images/localhost-hub.png',
+    liveUrl: undefined,
+    githubUrl: undefined,
+    featured: true,
+    category: 'personal'
+  },
+  {
     id: 'tech-support-tools',
     title: 'Tech Support Tools',
     descriptionKey: 'projectDescriptions.supportTools',
